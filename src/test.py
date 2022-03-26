@@ -82,7 +82,6 @@ def main():
     print("1024 x 2048==> FLOPs:  {:.2f} G, Params:  {:.2f} M".format(flops_1/1e9, params_1/1e6))
     print("1536 x 768==> FLOPs:  {:.2f} G, Params:  {:.2f} M".format(flops_2 /1e9, params_2/1e6))
 
-    pdb.set_trace()
     test_set = CityscapesTest(data_file=val_list, data_dir=val_dir, transform_test=composed_test, resolution=resolution)
     test_loader = DataLoader(test_set, batch_size=1, shuffle=False, num_workers=16, pin_memory=True)
 

@@ -2,15 +2,16 @@
 
 ## Dataset Set
 ### *Camvid*
-The Camvid dataset contains 701 images and 32 different semantic categories. We follow the previous works, and evaluate our segmentation model using 11 categories. For the details, please refer the papers [1], [2], [3]. The Camvid dataset can be downloaded from [http://mi.eng.cam.ac.uk/research/projects/VideoRec/CamVid/](http://mi.eng.cam.ac.uk/research/projects/VideoRec/CamVid/).     
+The Camvid dataset contains 701 images and 32 different semantic categories. We follow the previous works, and evaluate our segmentation model using 11 categories. For the details, please refer to the papers [1], [2], [3]. The Camvid dataset can be downloaded from [http://mi.eng.cam.ac.uk/research/projects/VideoRec/CamVid/](http://mi.eng.cam.ac.uk/research/projects/VideoRec/CamVid/).     
 
 ### *Cityscapes*
-The Cityscapes dataset contains 25 000 road scene images, in which 5000 images are finely annotated and 20 000 images are labelled with coarse annotation. In our experiments, we only adopt the fine-annotated subset. The fine-annotated subset involves 30 semantic categories. But we follow the previous works, and adopt 19 categories in model evaluation.  The Cityscapes dataset can be downloaded from [http://mi.eng.cam.ac.uk/research/projects/VideoRec/CamVid/](https://www.cityscapes-dataset.com/). Accordingly, the toolkits for data pre-processing can be found at [https://github.com/mcordts/cityscapesScripts](https://github.com/mcordts/cityscapesScripts).
+The Cityscapes dataset contains 25 000 road scene images, in which 5000 images are finely annotated and 20 000 images are labelled with coarse annotation. In our experiments, we only adopt the fine-annotated subset. The fine-annotated subset involves 30 semantic categories. But we follow the previous works [2], [3], [4], [5], and adopt 19 categories in model evaluation.  The Cityscapes dataset can be downloaded from [http://mi.eng.cam.ac.uk/research/projects/VideoRec/CamVid/](https://www.cityscapes-dataset.com/). Accordingly, the toolkits for data pre-processing can be found at [https://github.com/mcordts/cityscapesScripts](https://github.com/mcordts/cityscapesScripts).
 
 [1] Combining Appearance and Structure from Motion Features for Road Scene Understanding  
 [2] ICNet for real-time semantic segmentation on high-resolution images  
 [3] Efficient dense modules of asymmetric convolution for real-time semantic segmentation
-
+[4] Pyramid scene parsing network
+[5] PSANet: Point-wise spatial attention network for scene parsing
 
 ## Main Environment
 python==3.6.2  
