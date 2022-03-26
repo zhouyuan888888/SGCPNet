@@ -26,6 +26,7 @@ scikit-learn==0.16.2
 
 
 ##Script Running 
+
 (1). Before running the scripts, please run `python src/setup.py build_ext --build-lib=./src/`.  
 
 (2). For training the segmentation model, please run the command: `python src/train.py --evaluate [False/True]`.   
