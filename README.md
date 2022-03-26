@@ -33,3 +33,18 @@ scikit-learn==0.16.2
 
 (3). We have saved the well-trained model on the Cityscapes dataset in [*Google Drive*](https://drive.google.com/drive/folders/1VuN_qSXjU3A1vQhT1JJH4PZbdJcHmdO2?usp=sharing) for reproducing our results. Specifically, firstly, put the download checkpoint into the folder `./ckpt`. Secondly, run the command `python src/test.py`. The predictions for the test images are saved into the folder  `./ckpt/test_result`. Thirdly, please  run the command ` zip -r test_result.zip test_result` in bash. Finally, submit the file `test_result.zip`  to the official online evaluator ([https://www.cityscapes-dataset.com/submit/](https://www.cityscapes-dataset.com/submit/)) to get the final performance in the Cityscapes' test set.
 
+The results should be around the following:
+
+*Class level*
+
+|  Metric  | Average |  Road   | Sidewalk | Building |  Wall   |  Fence  |  Pole   | Trafficilight | Trafficsign | Vegetation | Terrain |   Sky   | Person  |  Rider  |   Car   |  Truck  |   Bus   |  Train  | Motorcycle | Bicycle |
+|:--------:|:-------:|:-------:|:--------:|:--------:|:-------:|:-------:|:-------:|:-------------:|:-----------:|:----------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|:----------:|:-------:|
+| IoU (%)  | 70.9003 | 98.0907 | 82.6953  | 90.8128  | 46.2016 | 48.8514 | 56.3521 |    61.3421    |   68.3546   |  92.0528   | 69.1465 | 94.5957 | 79.5957 | 61.4092 | 93.6822 | 53.2762 | 69.9236 | 60.5087 |  53.1659   | 67.0485 |
+| iIoU (%) | 43.4520 |   n/a   | n/a  | n/a  | n/a | n/a | n/a |    n/a    |   n/a   |  n/a   | n/a | n/a | 56.2162 | 35.7356 | 85.4904 | 22.7908 | 38.0693 | 29.0138 |  29.1411   | 51.1591 |
+
+*Category level*
+
+| Metric  | Average |Flat|Nature|Object|Sky|Construction|Human| Vehicle |
+|:-------:|:-------:|:---:|:---|:---:|:---:|:---:|:---:|:-------:|
+|IoU (%)| 87.3518 |98.3475|91.8220|63.0371|94.5957|91.0540|79.8839|92.7222|
+| iIoU (%) | 70.3811 |n/a|n/a|n/a|n/a|n/a|57.425|83.371|
