@@ -10,8 +10,7 @@ The Cityscapes dataset contains 25 000 road scene images, in which 5000 images a
 [1] Combining Appearance and Structure from Motion Features for Road Scene Understanding  
 [2] ICNet for real-time semantic segmentation on high-resolution images  
 [3] Efficient dense modules of asymmetric convolution for real-time semantic segmentation
-[4] Pyramid scene parsing network
-[5] PSANet: Point-wise spatial attention network for scene parsing
+[4] 
 
 ## Main Environment
 python==3.6.2  
