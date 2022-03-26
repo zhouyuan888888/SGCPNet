@@ -13,7 +13,7 @@ import torch
 from torch.utils.data import DataLoader
 import cv2
 import torch.nn as nn
-from thop_old import profile
+from thop import profile
 from models.SGCPNet import SGCPNet
 
 class ToTensor(object):
@@ -77,8 +77,8 @@ def main():
     load_path = "./ckpt/cityscapes.pth.tar"
     print(load_path)
 
-    flops_1, params_1 = profile(SGCPNet(num_classes=num_classes), input_size=(1, 3, 2048, 1024), device="cpu")
-    flops_2, params_2 = profile(SGCPNet(num_classes=num_classes), input_size=(1, 3, 1536, 768), device="cpu")
+    flops_1, params_1 = profile(SGCPNet(num_classes=num_classes), inputs=(torch.randn(1, 3, 2048, 1024),), report_missing=True)
+    flops_2, params_2 = profile(SGCPNet(num_classes=num_classes), inputs=(torch.randn(1, 3, 1536, 768),), report_missing=True)
     print("1024 x 2048==> FLOPs:  {:.2f} G, Params:  {:.2f} M".format(flops_1/1e9, params_1/1e6))
     print("1536 x 768==> FLOPs:  {:.2f} G, Params:  {:.2f} M".format(flops_2 /1e9, params_2/1e6))
 
