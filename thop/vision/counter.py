@@ -1,6 +1,16 @@
+import pdb
+
 import torch
 import numpy as np
 
+def  counter_MemoryEfficientSwish(input_size):
+    return torch.DoubleTensor([int(3*input_size)])
+
+def counter_hswish(input_size):
+    return torch.DoubleTensor([int(2*input_size)])
+
+def counter_hsigmoid(input_size):
+    return torch.DoubleTensor([int(2*input_size)])
 
 def counter_parameters(para_list):
     total_params = 0
@@ -34,10 +44,8 @@ def counter_softmax(batch_size, nfeatures):
     total_ops = batch_size * (total_exp + total_add + total_div)
     return torch.DoubleTensor([int(total_ops)])
 
-
 def counter_avgpool(input_size):
     return torch.DoubleTensor([int(input_size)])
-
 
 def counter_adap_avg(kernel_size, output_size):
     total_div = 1

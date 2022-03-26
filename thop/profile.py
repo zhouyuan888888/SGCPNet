@@ -1,7 +1,10 @@
+import pdb
 from distutils.version import LooseVersion
 
 from thop.vision.basic_hooks import *
 from thop.rnn_hooks import *
+from models.mbnet import hswish, hsigmoid
+from models.SGCPmodule import MemoryEfficientSwish
 
 
 # logger = logging.getLogger(__name__)
@@ -62,6 +65,9 @@ register_hooks = {
     nn.GRU: count_gru,
     nn.LSTM: count_lstm,
     nn.Sequential: zero_ops,
+    hswish:count_hswish,
+    hsigmoid:count_hsigmoid,
+    MemoryEfficientSwish: count_MemoryEfficientSwish
 }
 
 if LooseVersion(torch.__version__) >= LooseVersion("1.1.0"):
@@ -77,6 +83,7 @@ def profile_origin(model, inputs, custom_ops=None, verbose=True, report_missing=
         verbose = True
 
     def add_hooks(m):
+        print(m)
         if len(list(m.children())) > 0:
             return
 
@@ -91,13 +98,11 @@ def profile_origin(model, inputs, custom_ops=None, verbose=True, report_missing=
 
         for p in m.parameters():
             m.total_params += torch.DoubleTensor([p.numel()])
-
+            pdb.set_trace()
         m_type = type(m)
 
         fn = None
-        if (
-            m_type in custom_ops
-        ):  # if defined both op maps, use custom_ops to overwrite.
+        if (m_type in custom_ops):  # if defined both op maps, use custom_ops to overwrite.
             fn = custom_ops[m_type]
             if m_type not in types_collection and verbose:
                 print("[INFO] Customize rule %s() %s." % (fn.__qualname__, m_type))
@@ -107,10 +112,7 @@ def profile_origin(model, inputs, custom_ops=None, verbose=True, report_missing=
                 print("[INFO] Register %s() for %s." % (fn.__qualname__, m_type))
         else:
             if m_type not in types_collection and report_missing:
-                prRed(
-                    "[WARN] Cannot find rule for %s. Treat it as zero Macs and zero Params."
-                    % m_type
-                )
+                prRed("[WARN] Cannot find rule for %s. Treat it as zero Macs and zero Params."% m_type)
 
         if fn is not None:
             handler = m.register_forward_hook(fn)
@@ -118,7 +120,7 @@ def profile_origin(model, inputs, custom_ops=None, verbose=True, report_missing=
         types_collection.add(m_type)
 
     training = model.training
-
+    pdb.set_trace()
     model.eval()
     model.apply(add_hooks)
 
@@ -153,14 +155,9 @@ def profile_origin(model, inputs, custom_ops=None, verbose=True, report_missing=
     return total_ops, total_params
 
 
-def profile(
-    model: nn.Module,
-    inputs,
-    custom_ops=None,
-    verbose=True,
-    ret_layer_info=False,
-    report_missing=False,
-):
+def profile(model: nn.Module, inputs, custom_ops=None, verbose=True,
+                ret_layer_info=False, report_missing=False,):
+
     handler_collection = {}
     types_collection = set()
     if custom_ops is None:
@@ -172,28 +169,25 @@ def profile(
     def add_hooks(m: nn.Module):
         m.register_buffer("total_ops", torch.zeros(1, dtype=torch.float64))
         m.register_buffer("total_params", torch.zeros(1, dtype=torch.float64))
-
         # for p in m.parameters():
         #     m.total_params += torch.DoubleTensor([p.numel()])
-
+        #name = m.__class__.__name__
         m_type = type(m)
-
         fn = None
         if m_type in custom_ops:
             # if defined both op maps, use custom_ops to overwrite.
             fn = custom_ops[m_type]
             if m_type not in types_collection and verbose:
-                print("[INFO] Customize rule %s() %s." % (fn.__qualname__, m_type))
+                pass
+                #print("[INFO] Customize rule %s() %s." % (fn.__qualname__, m_type))
         elif m_type in register_hooks:
             fn = register_hooks[m_type]
             if m_type not in types_collection and verbose:
-                print("[INFO] Register %s() for %s." % (fn.__qualname__, m_type))
+                pass
+                #print("[INFO] Register %s() for %s." % (fn.__qualname__, m_type))
         else:
-            if m_type not in types_collection and report_missing:
-                prRed(
-                    "[WARN] Cannot find rule for %s. Treat it as zero Macs and zero Params."
-                    % m_type
-                )
+            if m_type not in types_collection and report_missing and len(list(m.children()))==0:
+                prRed("[WARN] Cannot find rule for %s. Treat it as zero Macs and zero Params."% m_type)
 
         if fn is not None:
             handler_collection[m] = (
@@ -203,7 +197,6 @@ def profile(
         types_collection.add(m_type)
 
     prev_training_status = model.training
-
     model.eval()
     model.apply(add_hooks)
 
@@ -213,15 +206,15 @@ def profile(
     def dfs_count(module: nn.Module, prefix="\t") -> (int, int):
         total_ops, total_params = module.total_ops.item(), 0
         ret_dict = {}
+        #if "TD_BU" in module.__class__.__name__:
+            #pdb.set_trace()
         for n, m in module.named_children():
             # if not hasattr(m, "total_ops") and not hasattr(m, "total_params"):  # and len(list(m.children())) > 0:
             #     m_ops, m_params = dfs_count(m, prefix=prefix + "\t")
             # else:
             #     m_ops, m_params = m.total_ops, m.total_params
             next_dict = {}
-            if m in handler_collection and not isinstance(
-                m, (nn.Sequential, nn.ModuleList)
-            ):
+            if m in handler_collection and not isinstance(m, (nn.Sequential, nn.ModuleList)):
                 m_ops, m_params = m.total_ops.item(), m.total_params.item()
             else:
                 m_ops, m_params, next_dict = dfs_count(m, prefix=prefix + "\t")

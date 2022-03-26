@@ -1,5 +1,7 @@
 import argparse
 import logging
+import pdb
+
 from .counter import (
     counter_parameters,
     counter_conv,
@@ -11,6 +13,9 @@ from .counter import (
     counter_zero_ops,
     counter_upsample,
     counter_linear,
+    counter_hswish,
+    counter_hsigmoid,
+    counter_MemoryEfficientSwish
 )
 import torch
 import torch.nn as nn
@@ -18,6 +23,17 @@ from torch.nn.modules.conv import _ConvNd
 
 multiply_adds = 1
 
+def count_MemoryEfficientSwish(m, x, y):
+    num_elements = y.numel()
+    m.total_ops += counter_MemoryEfficientSwish(num_elements)
+
+def count_hswish(m, x, y):
+    num_elements = y.numel()
+    m.total_ops += counter_hswish(num_elements)
+
+def count_hsigmoid(m, x, y):
+    num_elements = y.numel()
+    m.total_ops += counter_hsigmoid(num_elements)
 
 def count_parameters(m, x, y):
     total_params = 0
@@ -109,7 +125,6 @@ def count_avgpool(m, x, y):
     # kernel_ops = total_add + total_div
     num_elements = y.numel()
     m.total_ops += counter_avgpool(num_elements)
-
 
 def count_adap_avgpool(m, x, y):
     kernel = torch.DoubleTensor([*(x[0].shape[2:])]) // torch.DoubleTensor(

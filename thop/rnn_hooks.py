@@ -2,7 +2,6 @@ import torch
 import torch.nn as nn
 from torch.nn.utils.rnn import PackedSequence
 
-
 def _count_rnn_cell(input_size, hidden_size, bias=True):
     # h' = \tanh(W_{ih} x + b_{ih}  +  W_{hh} h + b_{hh})
     total_ops = hidden_size * (input_size + hidden_size) + hidden_size

@@ -70,9 +70,7 @@ def count_nn_conv2d(module: nn.Conv2d, input_shapes, output_shapes):
     in_channel = module.in_channels
     groups = module.groups
     kernel_ops = module.weight.shape[2:].numel()
-    total_ops = counter_conv(
-        bias_op, kernel_ops, out_shape.numel(), in_channel, groups
-    ).item()
+    total_ops = counter_conv(bias_op, kernel_ops, out_shape.numel(), in_channel, groups).item()
     return int(total_ops)
 
 
