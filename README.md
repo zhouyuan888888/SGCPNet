@@ -49,3 +49,13 @@ The results should be around the following:
 |:-------:|:-------:|:---:|:---|:---:|:---:|:---:|:---:|:-------:|
 |IoU (%)| 87.3518 |98.3475|91.8220|63.0371|94.5957|91.0540|79.8839|92.7222|
 | iIoU (%) | 70.3811 |n/a|n/a|n/a|n/a|n/a|57.425|83.371|
+
+
+If our work is helpful for your research, please consider citing our paper:
+```@article{hao2022real,
+  title={Real-Time Semantic Segmentation via Spatial-Detail Guided Context Propagation},  
+  author={Hao, Shijie and Zhou, Yuan and Guo, Yanrong and Hong, Richang and Cheng, Jun and Wang, Meng},  
+  journal={IEEE Transactions on Neural Networks and Learning Systems},
+  year={2022},  
+  publisher={IEEE}  
+}
