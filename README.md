@@ -52,10 +52,12 @@ The results should be around the following:
 
 
 If our work is helpful for your research, please consider citing our paper:
-```@article{hao2022real,
+```
+@article{hao2022real,
   title={Real-Time Semantic Segmentation via Spatial-Detail Guided Context Propagation},  
   author={Hao, Shijie and Zhou, Yuan and Guo, Yanrong and Hong, Richang and Cheng, Jun and Wang, Meng},  
   journal={IEEE Transactions on Neural Networks and Learning Systems},
   year={2022},  
   publisher={IEEE}  
 }
+```
