@@ -77,15 +77,17 @@ def main():
     load_path = "./ckpt/cityscapes.pth.tar"
     print(load_path)
 
-    flops_1, params_1 = profile(SGCPNet(num_classes=num_classes), inputs=(torch.randn(1, 3, 2048, 1024),), report_missing=True)
-    flops_2, params_2 = profile(SGCPNet(num_classes=num_classes), inputs=(torch.randn(1, 3, 1536, 768),), report_missing=True)
-    print("1024 x 2048==> FLOPs:  {:.2f} G, Params:  {:.2f} M".format(flops_1/1e9, params_1/1e6))
+    flops_1, params_1 = profile(SGCPNet(num_classes=num_classes), inputs=(torch.randn(1, 3, 2048, 1024),))
+    flops_2, params_2 = profile(SGCPNet(num_classes=num_classes), inputs=(torch.randn(1, 3, 1536, 768),))
+    print("1024 x 2048==> FLOPs:  {:.2f} G, Params:  {:.2f} M".format((flops_1)/1e9, params_1/1e6))
     print("1536 x 768==> FLOPs:  {:.2f} G, Params:  {:.2f} M".format(flops_2 /1e9, params_2/1e6))
 
+    pdb.set_trace()
     test_set = CityscapesTest(data_file=val_list, data_dir=val_dir, transform_test=composed_test, resolution=resolution)
     test_loader = DataLoader(test_set, batch_size=1, shuffle=False, num_workers=16, pin_memory=True)
 
     segmenter = nn.DataParallel(SGCPNet(num_classes=num_classes)).cuda()
+    pdb.set_trace()
     model_dict = torch.load(load_path)["segmenter"]
     segmenter.load_state_dict(model_dict)
     segmenter.eval()
