@@ -61,3 +61,5 @@ If our work is helpful for your research, please consider citing our paper:
   publisher={IEEE}  
 }
 ```
+
+Thanks for the great works [OpCounter](https://github.com/Lyken17/pytorch-OpCounter), [TensorRT](https://github.com/NVIDIA/TensorRT), and [DeepLab](https://github.com/YudeWang/deeplabv3plus-pytorch).
