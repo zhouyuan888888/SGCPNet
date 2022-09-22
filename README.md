@@ -62,4 +62,4 @@ If our work is helpful for your research, please consider citing our paper:
 }
 ```
 
-Thanks for the great works [OpCounter](https://github.com/Lyken17/pytorch-OpCounter), [TensorRT](https://github.com/NVIDIA/TensorRT), and [DeepLab](https://github.com/YudeWang/deeplabv3plus-pytorch).
+Very thanks for the great works [DeepLab](https://github.com/YudeWang/deeplabv3plus-pytorch), [Condense](https://arxiv.org/pdf/1711.09224.pdf), [HyperSeg](https://openaccess.thecvf.com/content/CVPR2021/papers/Nirkin_HyperSeg_Patch-Wise_Hypernetwork_for_Real-Time_Semantic_Segmentation_CVPR_2021_paper.pdf), [Mobilenet](https://github.com/xiaolai-sqlai/mobilenetv3),  [OpCounter](https://github.com/Lyken17/pytorch-OpCounter), and [TensorRT](https://github.com/NVIDIA/TensorRT).
